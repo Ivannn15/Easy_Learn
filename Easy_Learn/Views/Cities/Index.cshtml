@@ -1,0 +1,36 @@
+﻿@using Easy_Learn.Models
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model IEnumerable<Easy_Learn.Models.city>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>City</h2>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>CountryCode</th>
+        <th>District</th>
+        <th>Population</th>
+
+    </tr>
+    @foreach(var city in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayTextFor(expression: (IEnumerable<city> model) => city.Id)
+            </td>
+            <td>
+                @Html.DisplayTextFor(expression: (IEnumerable<city> model) => city.Name)
+            </td>
+            <td>
+                @Html.DisplayTextFor(expression: (IEnumerable<city> model) => city.District)
+            </td>
+            <td>
+                @Html.DisplayTextFor(expression: (IEnumerable<city> model) => city.Population)
+            </td>
+        </tr>
+    }
+</table>

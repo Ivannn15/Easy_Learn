@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
+
 namespace Easy_Learn
 {
     public class Startup
@@ -38,8 +39,8 @@ namespace Easy_Learn
             // добавляем поддержку контроллеров и представлений (MVC)
             services.AddControllersWithViews()
                 // выставляем совместимость с asp.net core 3.0 
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
-            services.Add(new ServiceDescriptor(typeof(wordModel), new wordModel(Configuration.GetConnectionString("DefaultConnection"))));
+                .SetCompatibilityVersion(version: CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
+            services.Add(item: new ServiceDescriptor(serviceType: typeof(wordModel), instance: new wordModel(connectionString: Configuration.GetConnectionString(name: "DefaultConnection"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +52,10 @@ namespace Easy_Learn
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
 
             app.UseRouting();
 
@@ -60,7 +65,7 @@ namespace Easy_Learn
             // регистрируем нужные нам маршруты (эндпоинты)
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Word}/{action=Index}/{id?}");
             });
         }
     }
